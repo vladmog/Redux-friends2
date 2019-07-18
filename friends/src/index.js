@@ -14,9 +14,10 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk, logger)));
 
 ReactDOM.render(
-    <Router>
-        <Provider store = {store}>
+    <Provider store = {store}>
+        <Router>
             <App />
-        </Provider>
-    </Router>
+        </Router>
+    </Provider>
+    //Provider should wrap router
 , document.getElementById('root'));

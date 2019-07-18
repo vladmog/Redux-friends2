@@ -1,4 +1,4 @@
-import {LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILURE} from '../actions/actions';
+import {LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILURE, GET_START, GET_SUCCESS} from '../actions/actions';
 
 let defaultState = {
     deletingFriend: false,
@@ -22,7 +22,7 @@ export default function reducer (state = defaultState, action){
             return {
                 ...state,
                 fetchingFriends: false,
-                friends: action.payload,
+                friends: [],
                 loggingIn: false,
             }
         case LOGIN_FAILURE:
@@ -32,7 +32,27 @@ export default function reducer (state = defaultState, action){
                 loggingIn: false,
                 error: action.payload
             }
-        
+        case GET_START:
+            return {
+                ...state,
+                deletingFriend: false,
+                fetchingFriends: true,
+                friends: [],
+                loggingIn: false,
+                savingFriends: false,
+                updatingFriend: false,
+                error: null
+            }
+        case GET_SUCCESS:
+            return {
+                deletingFriend: false,
+                fetchingFriends: false,
+                friends: action.payload,
+                loggingIn: false,
+                savingFriends: false,
+                updatingFriend: false,
+                error: null
+            }
         default: return state
     }
 }

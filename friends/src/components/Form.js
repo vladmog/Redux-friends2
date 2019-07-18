@@ -3,12 +3,14 @@ import {Component} from 'react';
 import App from '../App';
 import {Route, Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {login} from '../actions/actions'
+import {login, getFriends} from '../actions/actions'
 
 class Form extends Component {
     state = {
         username: "",
         password: ""
+
+   
     }
 
     changeHandler = e => {
@@ -18,13 +20,27 @@ class Form extends Component {
         })
     }
 
+
+
     submitHandler = e => {
         e.preventDefault()
         let creds = {
             username: this.state.username,
             password: this.state.password
         }
-        console.log(this.props.login(creds))
+        this.props.login(creds)
+            .then(res => {
+                console.log("formRes: ", res)
+                this.props.history.push("/friendslist")
+            })
+            .catch(err => {
+                console.log("formErr: ", err)
+            })
+        // let friend = {
+        //     name: "Marcus",
+        //     height: "5'8"
+        // }
+        this.props.getFriends()
 
     }
     render(){
@@ -46,6 +62,10 @@ class Form extends Component {
                         onClick = {this.submitHandler}
                     >Submit!</button>
                 </form>
+                
+      
+
+
                 <Route exact path = "/" component = {App} />
                 <Link to = "/">Home</Link>
             </div>
@@ -57,4 +77,4 @@ function mapStateToProps(){
     return {}
 }
 
-export default connect(mapStateToProps, {login})(Form);
+export default connect(mapStateToProps, {login, getFriends})(Form);
